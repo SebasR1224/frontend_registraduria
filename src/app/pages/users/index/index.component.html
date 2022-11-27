@@ -1,0 +1,115 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <app-sidebar></app-sidebar>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2 fst-italic fw-bold text-primary">Users</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="userForm" (ngSubmit)="actionsUsers(userForm.value)">
+                <div class="mb-3" *ngIf="isEdit">
+                  <label for="id" class="form-label">Id</label>
+                  <input type="text" class="form-control" id="id" formControlName="_id" [readOnly]="true" >
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" placeholder="Enter username here" formControlName="username">
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email here" formControlName="email">
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Enter password here" formControlName="password">
+                </div>
+                <div class="d-grid gap-2 col-7 mx-auto">
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                  <button class="btn btn-light" (click)="cancel()" type="button">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered" width="100%">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role Name</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users">
+                    <td>{{user._id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user?.role?.name}}</td>
+                    <td style="width: 130px;">
+                      <div class="btn-toolbar">
+                        <button type="button" (click)="editUser(user._id)" class="btn btn-sm rounded-circle btn-warning text-white me-2">
+                          <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                        <button type="button" (click)="deleteUser(user._id)" class="btn btn-sm rounded-circle btn-danger me-2">
+                          <i class="fa-regular fa-trash-can"></i>
+                        </button>   
+                        <button class="btn btn-sm rounded-circle btn-info text-white" data-bs-toggle="modal" (click)="openModalAsignRole(user._id, user.username, user?.role?._id)" >
+                          <i class="fa-solid fa-gear"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h1 class="modal-title fs-5" id="myModalLabel">Assign Role to User</h1>
+      </div>
+      <form [formGroup]="asignRoleForm" (ngSubmit)="asignRoleToUser(asignRoleForm.value)" >
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="idUser" class="form-label">Id User</label>
+            <input type="text" class="form-control" id="idUser" formControlName="_idUser" [readOnly]="true" >
+          </div>
+          <div class="mb-3">
+            <label for="usernameUser" class="form-label">Username</label>
+            <input type="text" class="form-control" id="usernameUser" formControlName="usernameUser" [readOnly]="true" >
+          </div>
+          <div class="mb-3">
+            <label for="idRole" class="form-label">Role</label>
+            <select formControlName="_idRole" id="idRole" class="form-select">
+              <option value="">Asing role...</option>
+              <option [value]="role._id" *ngFor="let role of roles">{{role.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer border-top-0  justify-content-between ">
+          <div class="d-grid gap-2 col-7 mx-auto">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-light" (click)="closeModalAsignRole()" type="button">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

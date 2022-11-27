@@ -1,0 +1,89 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+      <app-sidebar></app-sidebar>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2 fst-italic fw-bold text-primary">Candidates</h1>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <form [formGroup]="candidatesForm" (ngSubmit)="actionsCandidates(candidatesForm.value)">
+                  <div class="mb-3" *ngIf="isEdit">
+                    <label for="id" class="form-label">Id</label>
+                    <input type="text" class="form-control" id="id" formControlName="_id" [readOnly]="true" >
+                  </div>
+                  <div class="mb-3">
+                    <label for="dni" class="form-label">Dni</label>
+                    <input type="text" class="form-control" id="dni" placeholder="Enter dni here" formControlName="dni">
+                  </div>
+                  <div class="mb-3">
+                    <label for="resolution_number" class="form-label">Resolution Number</label>
+                    <input type="text" class="form-control" id="resolution_number" placeholder="Enter resolution_number here" formControlName="resolution_number">
+                  </div>
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name here" formControlName="name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" placeholder="Enter last name here" formControlName="last_name">
+                  </div>
+                  <div class="mb-3">
+                      <label for="id_politicalParty" class="form-label">Political Party</label>
+                      <select formControlName="id_politicalParty" id="id_politicalParty" class="form-select">
+                          <option value="" selected>Select political party...</option>
+                          <option [value]="politicalParty._id" *ngFor="let politicalParty of politicalParties">{{politicalParty.name}}</option>
+                      </select>
+                  </div>
+                  <div class="d-grid gap-2 col-7 mx-auto">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-light" (click)="cancel()" type="button">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" width="100%">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Dni</th>
+                      <th scope="col">Complete Name</th>
+                      <th scope="col">Resolution Number</th>
+                      <th scope="col">Political Party</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let candidate of candidates">
+                      <td>{{candidate._id}}</td>
+                      <td>{{candidate.dni}}</td>
+                      <td>{{candidate.name}} {{candidate.last_name}}</td>
+                      <td>{{candidate.resolution_number}}</td>
+                      <td>{{candidate?.politicalParty?.name}} - {{candidate?.politicalParty?.motto}}</td>
+                      <td style="width: 130px;">
+                        <div class="btn-toolbar">
+                          <button type="button" (click)="editCandidates(candidate._id)" class="btn btn-sm rounded-circle btn-warning text-white me-2">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                          </button>
+                          <button type="button" (click)="deleteCandidates(candidate._id)" class="btn btn-sm rounded-circle btn-danger me-2">
+                            <i class="fa-regular fa-trash-can"></i>
+                          </button> 
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>

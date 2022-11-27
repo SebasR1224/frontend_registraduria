@@ -1,0 +1,47 @@
+<header class="navbar navbar-expand-lg navbar-light bg-light sticky-top flex-md-nowrap border-bottom"
+    aria-label="Offcanvas navbar large">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold fst-italic" href="#">Registraduría</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
+            aria-controls="offcanvasNavbar2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
+            aria-labelledby="offcanvasNavbar2Label">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbar2Label">Offcanvas</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item" *ngIf="!islogin" >
+                        <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item" *ngIf="islogin" >
+                        <a class="nav-link active" aria-current="page" href="/dashboard"><i class="fa-solid fa-chart-column text-primary"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown" *ngIf="islogin" >
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-regular fa-user text-primary"></i> {{user.username}}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-user text-primary"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock text-primary"></i> Change Password</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear text-primary"></i> Settings</a></li>
+                            <li><a class="dropdown-item" href="#" (click)="logOut()"><i class="fa-solid fa-right-from-bracket text-primary"></i> log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex mt-3 mt-lg-0" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
