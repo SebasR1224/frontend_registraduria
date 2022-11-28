@@ -19,6 +19,8 @@ export class IndexComponent {
   constructor(private apiUsers:UsersService, private apiRoles:RolesService, private router:Router){}
 
   modalAsignRole: any;
+  alert:any = {}
+  isShowAlert:boolean = false
   users:Users[] = []
   roles:Roles[] = []
 
@@ -97,6 +99,10 @@ export class IndexComponent {
         let data:Users = response
 
         this.users.push(data)
+
+        this.showAlert({'status': 'SUCCESS', 'msg': 'User added', 'class': 'success'})
+
+
         this.cancel()
 
       }, (error) => {
@@ -129,6 +135,9 @@ export class IndexComponent {
       this.apiUsers.updateUser(form).subscribe(response => {
         let data:Users = response
         this.users[i] = data
+
+        this.showAlert({'status': 'SUCCESS', 'msg': 'User updated', 'class': 'warning'})
+
         this.cancel()
       }, (error) => {
         this.cancel()
@@ -202,8 +211,24 @@ export class IndexComponent {
     })
   }
 
+  showAlert(alert:any){
+    this.alert = {}
+    
+    this.isShowAlert = true
+    this.alert.class = alert.class
+    this.alert.status = alert.status
+    this.alert.msg = alert.msg
+  }
+
   cancel(){
     this.isEdit = false
     this.userForm.reset()
+
+    
+    setTimeout(() => {
+      this.isShowAlert = false
+      this.alert = {}
+    }, 2000);
+
   }
 }

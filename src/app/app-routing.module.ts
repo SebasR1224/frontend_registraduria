@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { IndexComponent } from './pages/users/index/index.component';
 import { IndexComponent as CandidatesIndexComponent } from './pages/candidates/index/index.component';
 import { ProfileComponent } from './pages/users/profile/profile.component';
+import { IndexComponent as RolesPermissionsIndexComponent } from './pages/roles-permissions/index/index.component';
 
 const routes: Routes = [
     {path: '',redirectTo: 'home', pathMatch:'full'},
@@ -15,6 +16,7 @@ const routes: Routes = [
     {path: 'users', component:IndexComponent},
     {path: 'candidates', component:CandidatesIndexComponent},
     {path: 'profile', component:ProfileComponent},
+    {path: 'settings/roles-permissions', component:RolesPermissionsIndexComponent},
 ];
 
 @NgModule({
@@ -28,5 +30,6 @@ export const routeRomponents = [
   DashboardComponent,
   IndexComponent,
   CandidatesIndexComponent,
-  ProfileComponent
+  ProfileComponent,
+  RolesPermissionsIndexComponent
 ]

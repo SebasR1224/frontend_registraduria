@@ -15,6 +15,8 @@ export class IndexComponent {
 
   constructor(private apiCandidates:CandidatesService, private apiPoliticalParties:PoliticalPartiesService , private router:Router){}
 
+  alert:any = {}
+  isShowAlert:boolean = false
   candidates:Candidates[] = []
   politicalParties:PoliticalParties[] = []
 
@@ -83,6 +85,7 @@ export class IndexComponent {
       this.apiCandidates.addNewCandidates(form).subscribe(response => {
         let data:Candidates = response
         this.candidates.push(data)
+        this.showAlert({'status': 'SUCCESS', 'msg': 'Candidate added', 'class': 'success'})
         this.cancel()
       }, (error) => {
         this.cancel()
@@ -119,6 +122,7 @@ export class IndexComponent {
       this.apiCandidates.updateCandidates(form).subscribe(response => {
         let data:Candidates = response
         this.candidates[i] = data
+        this.showAlert({'status': 'SUCCESS', 'msg': 'Candidate update', 'class': 'warning'})
         this.cancel()
       }, (error) => {
 
@@ -160,9 +164,24 @@ export class IndexComponent {
     })
   }
 
+  showAlert(alert:any){
+    this.alert = {}
+    
+    this.isShowAlert = true
+    this.alert.class = alert.class
+    this.alert.status = alert.status
+    this.alert.msg = alert.msg
+  }
+
   cancel(){
     this.isEdit = false
     this.candidatesForm.reset()
+
+    setTimeout(() => {
+      this.isShowAlert = false
+      this.alert = {}
+    }, 2000);
+
   }
 
 }

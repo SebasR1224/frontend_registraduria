@@ -14,10 +14,9 @@
             <input type="datetime-local" class="form-control form-control-sm" >
           </div>
           <div class="form-group me-5">
-            <select name="" id="" class="form-select form-select-sm">
+            <select name="" id="" class="form-select form-select-sm" (change)="filterBytable($event)">
               <option value="" selected>filter by polling station</option>
-              <option value=""></option>
-              <option value=""></option>
+              <option [value]="votingTable._id" *ngFor="let votingTable of votingTables">{{votingTable.number_table}}</option>
             </select>
           </div>
           <div class="btn-group ">
@@ -31,8 +30,8 @@
           <div class="card bg-c-blue order-card">
             <div class="card-block">
               <h6 class="m-b-20">Total Votes</h6>
-              <h2 class="text-right"><i class="fa-solid fa-check-to-slot pe-2"></i><span>486</span></h2>
-              <p class="m-b-0">Completed Orders<span> 351</span></p>
+              <h2 class="text-right"><i class="fa-solid fa-check-to-slot pe-2"></i><span>{{sumAllVotes}}</span></h2>
+              <p class="m-b-0">The {{registeredDocuments}} people authorized to vote</p>
             </div>
           </div>
         </div>
@@ -70,6 +69,9 @@
       <div class="row">
           <div class="col-md-7">
             <div class="card">
+              <div class="card-header border-bottom-0 text-primary fst-italic">
+                Candidate Total Votes
+              </div>
               <div class="card-body">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                   <table class="table">
@@ -82,7 +84,14 @@
                       </tr>
                     </thead>
                     <tbody>
-  
+                      <ng-container *ngIf="votesCandidates.length > 0">
+                        <tr *ngFor="let item of votesCandidates">
+                          <td>{{item.name_candidate}} {{item.lastName_candidate}}</td>
+                          <td>{{item.name_politicalParty}}</td>
+                          <td>{{item.numer_table}}</td>
+                          <td>{{item.total_votes}}</td>
+                        </tr>
+                      </ng-container>
                     </tbody>
                   </table>
                 </div>
@@ -91,6 +100,9 @@
           </div>
           <div class="col-md-5">
             <div class="card">
+              <div class="card-header border-bottom-0 text-primary fst-italic">
+                Total Votes Table
+              </div>
               <div class="card-body">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                   <table class="table">
@@ -102,7 +114,13 @@
                       </tr>
                     </thead>
                     <tbody>
-  
+                      <ng-container *ngIf="totalVotesTable.length > 0">
+                        <tr *ngFor="let item of totalVotesTable">
+                          <td>{{item.numer_table}}</td>
+                          <td>{{item.registered_documents}}</td>
+                          <td>{{item.total_votes}}</td>
+                        </tr>
+                      </ng-container>
                     </tbody>
                   </table>
                 </div>
@@ -111,6 +129,9 @@
           </div>
           <div class="col-md-5">
             <div class="card">
+              <div class="card-header border-bottom-0 text-primary fst-italic">
+                Voting List For Each Candidate
+              </div>
               <div class="card-body">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                   <table class="table">
@@ -123,7 +144,14 @@
                       </tr>
                     </thead>
                     <tbody>
-  
+                      <ng-container *ngIf="voteList.length > 0">
+                        <tr *ngFor="let item of voteList">
+                          <td>{{item.name_candidate}} {{item.lastName_candidate}}</td>
+                          <td>{{item.name_politicalParty}}</td>
+                          <td>{{item.numer_table}}</td>
+                          <td>{{item.total_votes}}</td>
+                        </tr>
+                      </ng-container>
                     </tbody>
                   </table>   
                 </div>
@@ -132,6 +160,9 @@
           </div>
           <div class="col-md-3">
             <div class="card">
+              <div class="card-header border-bottom-0 text-primary fst-italic">
+                Total Votes Political Party
+              </div>
               <div class="card-body">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                   <table class="table">
@@ -142,7 +173,12 @@
                       </tr>
                     </thead>
                     <tbody>
-  
+                      <ng-container *ngIf="totalVotesPoliticalParty.length > 0">
+                        <tr *ngFor="let item of totalVotesPoliticalParty">
+                          <td>{{item.total_votes}}</td>
+                          <td>{{item.name_politicalParty}}</td>
+                        </tr>
+                      </ng-container>
                     </tbody>
                   </table>   
                 </div>
@@ -151,6 +187,9 @@
           </div>
           <div class="col-md-4">
             <div class="card">
+              <div class="card-header border-bottom-0 text-primary fst-italic">
+                Congress Distribution
+              </div>
               <div class="card-body">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                   <table class="table">
@@ -162,7 +201,13 @@
                       </tr>
                     </thead>
                     <tbody>
-  
+                      <ng-container *ngIf="percentageCongress.length > 0">
+                        <tr *ngFor="let item of percentageCongress">
+                          <td>{{item.name}}</td>
+                          <td>{{item.total_votes}}</td>
+                          <td>{{item.percent}} %</td>
+                        </tr>
+                      </ng-container>
                     </tbody>
                   </table>   
                 </div>

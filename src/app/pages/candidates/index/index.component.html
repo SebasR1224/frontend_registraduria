@@ -12,6 +12,10 @@
           <div class="col-md-4">
             <div class="card">
               <div class="card-body">
+                <div class="alert alert-{{alert.class}} text-dark border border-{{alert.class}} p-2" *ngIf="isShowAlert" >
+                  <strong class="text-{{alert.class}}">{{alert.status}}:</strong>
+                  {{alert.msg}}
+                </div>
                 <form [formGroup]="candidatesForm" (ngSubmit)="actionsCandidates(candidatesForm.value)">
                   <div class="mb-3" *ngIf="isEdit">
                     <label for="id" class="form-label">Id</label>
